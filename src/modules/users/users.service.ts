@@ -20,4 +20,14 @@ export class UsersService {
   async findOneById(id: number): Promise<User> {
     return await this.userRepository.findOne<User>({ where: { id } });
   }
+
+  async changePassword(id: number, newPassword: string) {
+    const [numberOfAffectedRows, [updatedUser]] =
+      await this.userRepository.update(
+        { password: newPassword },
+        { where: { id }, returning: true },
+      );
+
+    return { numRec: numberOfAffectedRows, User: updatedUser };
+  }
 }

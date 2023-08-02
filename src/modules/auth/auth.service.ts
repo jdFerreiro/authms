@@ -7,28 +7,12 @@ import { UserDto } from '../users/dto/user.dto';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userService: UsersService,
+    private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
   ) {}
 
-  private async comparePassword(enteredPassword: string, dbPassword: string) {
-    const match = await bcrypt.compare(enteredPassword, dbPassword);
-    return match;
-  }
-
-  private async generateToken(user: any) {
-    const token = await this.jwtService.signAsync(user);
-    return token;
-  }
-
-  private async hashPassword(password: any) {
-    const salt: number = Number.parseInt(process.env.SALTROUNDS);
-    const hash = await bcrypt.hash(password, salt);
-    return hash;
-  }
-
   async validateUser(username: string, pass: string) {
-    const user = await this.userService.findOneByEmail(username);
+    const user = await this.usersService.findOneByEmail(username);
     if (!user) {
       return null;
     }
@@ -45,14 +29,20 @@ export class AuthService {
   }
 
   public async login(user: any) {
-    const token = await this.generateToken(user);
+    const result = this.validateUser(user.email, user.password);
+    const payload = {
+      id: (await result).id,
+      email: (await result).email,
+      name: (await result).name,
+    };
+    const token = await this.generateToken(payload);
     return { user, token };
   }
 
   public async create(user: UserDto) {
     const pass = await this.hashPassword(user.password);
 
-    const newUser = await this.userService.create({ ...user, password: pass });
+    const newUser = await this.usersService.create({ ...user, password: pass });
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...result } = newUser['dataValues'];
@@ -60,5 +50,46 @@ export class AuthService {
     const token = await this.generateToken(result);
 
     return { user: result, token };
+  }
+
+  public async changePassword(
+    id: number,
+    password: string,
+    newPassword: string,
+  ) {
+    const user = await this.usersService.findOneById(id);
+    if (!user) {
+      return null;
+    }
+
+    const match = await this.comparePassword(password, user.password);
+    if (!match) {
+      return null;
+    }
+
+    const newPass = await this.hashPassword(newPassword);
+    const result = await this.usersService.changePassword(id, newPass);
+
+    if (result.numRec === 0) {
+      return null;
+    }
+
+    return result.User;
+  }
+
+  private async comparePassword(enteredPassword: string, dbPassword: string) {
+    const match = await bcrypt.compare(enteredPassword, dbPassword);
+    return match;
+  }
+
+  private async generateToken(user: any) {
+    const token = await this.jwtService.signAsync(user);
+    return token;
+  }
+
+  private async hashPassword(password: any) {
+    const salt: number = Number.parseInt(process.env.SALTROUNDS);
+    const hash = await bcrypt.hash(password, salt);
+    return hash;
   }
 }

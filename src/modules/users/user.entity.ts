@@ -5,6 +5,13 @@ import { Table, Column, Model, DataType } from 'sequelize-typescript';
 })
 export class User extends Model<User> {
   @Column({
+    type: DataType.INTEGER,
+    allowNull: true,
+    primaryKey: true,
+  })
+  id: number;
+
+  @Column({
     type: DataType.STRING,
     allowNull: false,
     unique: true,
@@ -71,7 +78,7 @@ export class User extends Model<User> {
 
   @Column({
     type: DataType.INTEGER,
-    allowNull: false,
+    allowNull: true,
   })
   deletedBy: number;
 }
