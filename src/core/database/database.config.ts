@@ -11,7 +11,7 @@ export const databaseConfig: IDatabaseConfig = {
     host: process.env.DEV_DB_HOST,
     port: process.env.DEV_DB_PORT,
     dialect: process.env.DEV_DB_DIALECT,
-    logging: process.env.DEV_DB_LOGGING === 'true',
+    logging: process.env.DEV_DB_LOGGING === 'false',
   },
   test: {
     username: process.env.TEST_DB_USER,

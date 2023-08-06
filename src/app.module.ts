@@ -4,6 +4,11 @@ import { DatabaseModule } from './core/database/database.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { RolesModule } from './modules/roles/roles.module';
+import { StatusModule } from './modules/status/status.module';
+import { MenuModule } from './modules/menu/menu.module';
 
 @Module({
   imports: [
@@ -12,6 +17,11 @@ import { UserModule } from './modules/user/user.module';
     UsersModule,
     AuthModule,
     UserModule,
+    RolesModule,
+    StatusModule,
+    MenuModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

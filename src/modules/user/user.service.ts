@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { USER_REPOSITORY } from 'src/core/constants';
-import { User } from 'src/modules/users/user.entity';
-import { UserDto } from 'src/modules/users/dto/user.dto';
+import { User, Status, Role } from 'src/modules/entities';
+import { UserDto } from 'src/modules/DTOs/user.dto';
 import { Op } from 'sequelize';
 
 @Injectable()
@@ -11,50 +11,101 @@ export class UserService {
     private readonly userRepository: typeof User,
   ) {}
 
-  async getAllUsers(): Promise<User[]> {
+  async findAll(): Promise<User[]> {
     return await this.userRepository.findAll<User>({
       where: { statusId: { [Op.lt]: 4 } },
+      include: [
+        {
+          model: Status,
+          attributes: ['name'],
+          as: 'status',
+        },
+        {
+          model: Role,
+          attributes: ['id', 'name'],
+          as: 'roles',
+        },
+      ],
     });
   }
 
-  async createUser(user: UserDto): Promise<User> {
-    return await this.userRepository.create<User>(user);
-  }
-
   async findOneByEmail(email: string): Promise<User> {
-    return await this.userRepository.findOne<User>({ where: { email } });
+    return await this.userRepository.findOne<User>({
+      where: { email },
+      include: {
+        model: Status,
+        as: 'status',
+      },
+    });
   }
 
   async findOneById(id: number): Promise<User> {
-    return await this.userRepository.findOne<User>({ where: { id } });
+    return await this.userRepository.findOne<User>({
+      where: { id },
+      include: {
+        model: Status,
+        as: 'status',
+      },
+    });
   }
 
-  async update(id: number, user: UserDto): Promise<{ number; User }> {
-    const [numberOfAffectedRows, [updatedUser]] =
-      await this.userRepository.update(
-        { ...user },
-        { where: { id }, returning: true },
-      );
-    return { number: numberOfAffectedRows, User: updatedUser };
+  async createUser(user: UserDto, userId: number): Promise<User> {
+    user.updatedBy = userId;
+    user.createdBy = userId;
+    return await this.userRepository.create<User>(user);
   }
 
-  async delete(id: number) {
-    const [numberOfAffectedRows, [updatedUser]] =
-      await this.userRepository.update(
-        { statusId: 4, statusDate: new Date() },
-        { where: { id }, returning: true },
-      );
+  async update(
+    id: number,
+    user: UserDto,
+    userId: number,
+  ): Promise<{ affectedRows }> {
+    user.updatedBy = userId;
 
-    return { number: numberOfAffectedRows, User: updatedUser };
+    let numberOfAffectedRows = [];
+
+    await this.userRepository
+      .update({ ...user }, { where: { id }, returning: true })
+      .then(function ([, rows]) {
+        numberOfAffectedRows = rows;
+      });
+
+    return { affectedRows: numberOfAffectedRows };
   }
 
-  async changeStatus(id: number, statusid: number) {
-    const [numberOfAffectedRows, [updatedUser]] =
-      await this.userRepository.update(
-        { statusId: statusid, statusDate: new Date() },
-        { where: { id }, returning: true },
-      );
+  async delete(id: number, userId: number) {
+    const user: User = await this.findOneById(id);
 
-    return { number: numberOfAffectedRows, User: updatedUser };
+    user.statusId = 4;
+    user.statusDate = new Date();
+    user.updatedBy = userId;
+
+    let numberOfAffectedRows = [];
+
+    await this.userRepository
+      .update({ ...user }, { where: { id }, returning: true })
+      .then(function ([, rows]) {
+        numberOfAffectedRows = rows;
+      });
+
+    return { affectedRows: numberOfAffectedRows };
+  }
+
+  async changeStatus(id: number, statusid: number, userId: number) {
+    const user: User = await this.findOneById(id);
+
+    user.statusId = statusid;
+    user.statusDate = new Date();
+    user.updatedBy = userId;
+
+    let numberOfAffectedRows = [];
+
+    await this.userRepository
+      .update({ ...user }, { where: { id }, returning: true })
+      .then(function ([, rows]) {
+        numberOfAffectedRows = rows;
+      });
+
+    return { affectedRows: numberOfAffectedRows };
   }
 }

@@ -65,7 +65,7 @@ export class UserDto {
   readonly bornDate: Date;
 
   readonly createdAt: Date;
-  readonly createdBy: number;
+  createdBy: number;
   readonly updatedAt: Date;
-  readonly updatedBy: number;
+  updatedBy: number;
 }

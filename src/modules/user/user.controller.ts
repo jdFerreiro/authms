@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from './user.service';
-import { UserDto } from 'src/modules/users/dto/user.dto';
+import { UserDto } from 'src/modules/DTOs/user.dto';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiBearerAuth()
@@ -21,36 +21,40 @@ export class UserController {
   @UseGuards(AuthGuard('jwt'))
   @Get('getAll')
   async getAll() {
-    return await this.userService.getAllUsers();
+    return await this.userService.findAll();
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Get('getById')
   async getById(@Request() req) {
-    return await this.userService.findOneById(req.id);
+    return await this.userService.findOneById(req.query.id);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Get('getByEmail')
   async getByEmail(@Request() req) {
-    return await this.userService.findOneByEmail(req.email);
+    return await this.userService.findOneByEmail(req.query.email);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Patch('update')
-  async update(@Body() user: UserDto) {
-    return await this.userService.update(user.id, user);
+  async update(@Request() req, @Body() user: UserDto) {
+    return await this.userService.update(user.id, user, req.user.id);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Patch('changeStatus')
-  async changeStatus(@Body() data: any) {
-    return await this.userService.changeStatus(data.id, data.statusId);
+  async changeStatus(@Request() req, @Body() data: any) {
+    return await this.userService.changeStatus(
+      data.id,
+      data.statusId,
+      req.user.id,
+    );
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Delete('delete')
   async delete(@Request() req) {
-    return await this.userService.delete(req.id);
+    return await this.userService.delete(req.query.id, req.user.id);
   }
 }

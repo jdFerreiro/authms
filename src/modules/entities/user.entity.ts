@@ -1,9 +1,21 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  BelongsTo,
+  ForeignKey,
+  BelongsToMany,
+} from 'sequelize-typescript';
+import { Status } from './status.entity';
+import { Role } from './role.entity';
+import { UserRole } from './userRole.entity';
 
 @Table({
   tableName: 'users',
 })
 export class User extends Model<User> {
+  @ForeignKey(() => UserRole)
   @Column({
     type: DataType.INTEGER,
     allowNull: true,
@@ -14,7 +26,6 @@ export class User extends Model<User> {
   @Column({
     type: DataType.STRING,
     allowNull: false,
-    unique: true,
   })
   name: string;
 
@@ -39,6 +50,7 @@ export class User extends Model<User> {
   })
   password: string;
 
+  @ForeignKey(() => Status)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
@@ -70,15 +82,9 @@ export class User extends Model<User> {
   })
   updatedBy: number;
 
-  @Column({
-    type: DataType.DATE,
-    allowNull: true,
-  })
-  deletedAt: Date;
+  @BelongsTo(() => Status)
+  status: Status;
 
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: true,
-  })
-  deletedBy: number;
+  @BelongsToMany(() => Role, () => UserRole)
+  roles: Role[];
 }

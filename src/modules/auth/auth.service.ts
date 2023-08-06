@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
-import { UserDto } from '../users/dto/user.dto';
+import { UserDto } from '../DTOs/user.dto';
 
 @Injectable()
 export class AuthService {
@@ -10,6 +10,15 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
   ) {}
+
+  validateApiKey(apiKey: string) {
+    const apiKeys: string[] = [
+      process.env.OWNER_APIKEY,
+      process.env.EXTERNAL_APIKEY,
+    ];
+
+    return apiKeys.find((key) => apiKey === key);
+  }
 
   async validateUser(username: string, pass: string) {
     const user = await this.usersService.findOneByEmail(username);
