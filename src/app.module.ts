@@ -9,6 +9,8 @@ import { AppService } from './app.service';
 import { RolesModule } from './modules/roles/roles.module';
 import { StatusModule } from './modules/status/status.module';
 import { MenuModule } from './modules/menu/menu.module';
+import { UserRolesModule } from './modules/userroles/userroles.module';
+import { MenuRolesModule } from './modules/menuroles/menuroles.module';
 
 @Module({
   imports: [
@@ -20,6 +22,8 @@ import { MenuModule } from './modules/menu/menu.module';
     RolesModule,
     StatusModule,
     MenuModule,
+    UserRolesModule,
+    MenuRolesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

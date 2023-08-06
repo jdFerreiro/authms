@@ -5,6 +5,7 @@ import {
   DataType,
   ForeignKey,
   HasMany,
+  Sequelize,
 } from 'sequelize-typescript';
 import { Role } from './role.entity';
 import { User } from './user.entity';
@@ -13,17 +14,11 @@ import { User } from './user.entity';
   tableName: 'userroles',
 })
 export class UserRole extends Model<UserRole> {
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: true,
-    primaryKey: true,
-  })
-  id: number;
-
   @ForeignKey(() => Role)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    primaryKey: true,
   })
   roleId: number;
 
@@ -31,14 +26,29 @@ export class UserRole extends Model<UserRole> {
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    primaryKey: true,
   })
   userId: number;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+  })
+  createdAt: Date;
 
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
   createdBy: number;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+  })
+  updatedAt: Date;
 
   @Column({
     type: DataType.INTEGER,

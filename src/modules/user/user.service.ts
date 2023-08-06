@@ -32,20 +32,36 @@ export class UserService {
   async findOneByEmail(email: string): Promise<User> {
     return await this.userRepository.findOne<User>({
       where: { email },
-      include: {
-        model: Status,
-        as: 'status',
-      },
+      include: [
+        {
+          model: Status,
+          attributes: ['name'],
+          as: 'status',
+        },
+        {
+          model: Role,
+          attributes: ['id', 'name'],
+          as: 'roles',
+        },
+      ],
     });
   }
 
   async findOneById(id: number): Promise<User> {
     return await this.userRepository.findOne<User>({
       where: { id },
-      include: {
-        model: Status,
-        as: 'status',
-      },
+      include: [
+        {
+          model: Status,
+          attributes: ['name'],
+          as: 'status',
+        },
+        {
+          model: Role,
+          attributes: ['id', 'name'],
+          as: 'roles',
+        },
+      ],
     });
   }
 
@@ -62,14 +78,22 @@ export class UserService {
   ): Promise<{ affectedRows }> {
     user.updatedBy = userId;
 
-    let numberOfAffectedRows = [];
 
-    await this.userRepository
-      .update({ ...user }, { where: { id }, returning: true })
-      .then(function ([, rows]) {
-        numberOfAffectedRows = rows;
-      });
+    const result = await this.userRepository.update(
+      { ...user },
+      { where: { id }, individualHooks: true },
+    );
 
+    const numberOfAffectedRows = result[0];
+    // const updatedData = result[1];
+
+    /*
+    const { numberOfAffectedRows: number, updatedData: any } =
+      await this.userRepository.update(
+        { ...user },
+        { where: { id }, individualHooks: true },
+      );
+*/
     return { affectedRows: numberOfAffectedRows };
   }
 

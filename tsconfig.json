@@ -1,5 +1,6 @@
 {
-  "compilerOptions": {
+  "compilerOptions": 
+  {
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
@@ -18,7 +19,7 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@Entities/*": ["src/modules/entities/*"]
+      "@Entities/*": ["src/modules/entities/*"],
     }
-  }
+  },
 }

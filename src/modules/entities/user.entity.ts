@@ -6,6 +6,12 @@ import {
   BelongsTo,
   ForeignKey,
   BelongsToMany,
+  Sequelize,
+  AfterCreate,
+  AfterUpdate,
+  AfterDestroy,
+  BeforeUpdate,
+  HookOptions,
 } from 'sequelize-typescript';
 import { Status } from './status.entity';
 import { Role } from './role.entity';
@@ -71,10 +77,24 @@ export class User extends Model<User> {
   gender: string;
 
   @Column({
+    type: DataType.DATE,
+    allowNull: false,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+  })
+  createdAt: Date;
+
+  @Column({
     type: DataType.INTEGER,
     allowNull: false,
   })
   createdBy: number;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: false,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+  })
+  updatedAt: Date;
 
   @Column({
     type: DataType.INTEGER,
@@ -87,4 +107,13 @@ export class User extends Model<User> {
 
   @BelongsToMany(() => Role, () => UserRole)
   roles: Role[];
+
+  @BeforeUpdate
+  static hashPasswordBeforeUpdate(user: User, options: HookOptions) {}
+
+  @AfterUpdate
+  static hookFunction(res) {
+    
+    console.log(res);
+  }
 }

@@ -2,8 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 
 export class MenuRoleDto {
-  readonly id: number;
-
   @ApiProperty()
   @IsNotEmpty({ message: 'menu id is required.' })
   readonly menuId: number;

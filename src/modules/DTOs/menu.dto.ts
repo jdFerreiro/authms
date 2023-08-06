@@ -8,6 +8,10 @@ enum menuStatus {
 
 export class MenuDto {
   @ApiProperty()
+  @IsNotEmpty({ message: 'id is required.' })
+  readonly id: number;
+
+  @ApiProperty()
   readonly parentId: number;
 
   @ApiProperty()
@@ -16,14 +20,14 @@ export class MenuDto {
 
   @ApiProperty()
   @IsNotEmpty({ message: 'path is required.' })
-  readonly path: string;
+  readonly menuPath: string;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'status is required.' })
   @IsEnum(menuStatus, {
     message: 'status must be either active or inactive',
   })
-  readonly gender: string;
+  readonly status: string;
   readonly createdAt: Date;
   createdBy: number;
   readonly updatedAt: Date;
