@@ -11,7 +11,7 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { MenuRoleService } from './menuroles.service';
 import { AuthGuard } from '@nestjs/passport';
-import { MenuRoleDto } from '../DTOs/MenuRole.dto';
+import { MenuRoleDto } from '@Dtos/MenuRole.dto';
 
 @ApiBearerAuth()
 @ApiTags('MenuRole')

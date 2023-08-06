@@ -1,4 +1,4 @@
-import { Role } from '../entities/role.entity';
+import { Role } from '@Entities/role.entity';
 import { ROLE_REPOSITORY } from 'src/core/constants';
 
 export const rolesProviders = [

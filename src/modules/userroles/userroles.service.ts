@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { UserRole } from '../entities/UserRole.entity';
-import { UserRoleDto } from '../DTOs/UserRole.dto';
+import { UserRole } from '@Entities/UserRole.entity';
+import { UserRoleDto } from '@Dtos/UserRole.dto';
 import { USERROLE_REPOSITORY } from 'src/core/constants';
 import { User } from '@Entities/user.entity';
 import { Role } from '@Entities/role.entity';

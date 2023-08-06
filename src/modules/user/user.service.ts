@@ -1,7 +1,9 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { USER_REPOSITORY } from 'src/core/constants';
-import { User, Status, Role } from 'src/modules/entities';
-import { UserDto } from 'src/modules/DTOs/user.dto';
+import { User } from '@Entities/user.entity';
+import { Status } from '@Entities/status.entity';
+import { Role } from '@Entities/role.entity';
+import { UserDto } from '@Dtos/user.dto';
 import { Op } from 'sequelize';
 
 @Injectable()
@@ -78,22 +80,12 @@ export class UserService {
   ): Promise<{ affectedRows }> {
     user.updatedBy = userId;
 
-
     const result = await this.userRepository.update(
       { ...user },
       { where: { id }, individualHooks: true },
     );
 
     const numberOfAffectedRows = result[0];
-    // const updatedData = result[1];
-
-    /*
-    const { numberOfAffectedRows: number, updatedData: any } =
-      await this.userRepository.update(
-        { ...user },
-        { where: { id }, individualHooks: true },
-      );
-*/
     return { affectedRows: numberOfAffectedRows };
   }
 
@@ -104,14 +96,12 @@ export class UserService {
     user.statusDate = new Date();
     user.updatedBy = userId;
 
-    let numberOfAffectedRows = [];
+    const result = await this.userRepository.update(
+      { ...user },
+      { where: { id }, individualHooks: true },
+    );
 
-    await this.userRepository
-      .update({ ...user }, { where: { id }, returning: true })
-      .then(function ([, rows]) {
-        numberOfAffectedRows = rows;
-      });
-
+    const numberOfAffectedRows = result[0];
     return { affectedRows: numberOfAffectedRows };
   }
 

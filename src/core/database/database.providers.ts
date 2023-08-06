@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize-typescript';
 import { SEQUELIZE, DEVELOPMENT, TEST, PRODUCTION } from '../constants';
 import { databaseConfig } from './database.config';
-import * as Models from 'src/modules/entities';
+import * as Models from '../database/entities';
 import { Model } from 'sequelize';
 
 export const databaseProviders = [

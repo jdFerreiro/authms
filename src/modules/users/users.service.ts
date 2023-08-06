@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { User } from '../entities/user.entity';
-import { UserDto } from '../DTOs/user.dto';
+import { User } from '@Entities/user.entity';
+import { UserDto } from '@Dtos/user.dto';
 import { USER_REPOSITORY } from 'src/core/constants';
 
 @Injectable()
@@ -10,6 +10,8 @@ export class UsersService {
   ) {}
 
   async create(user: UserDto): Promise<User> {
+    user.updatedBy = 1;
+    user.createdBy = 1;
     return await this.userRepository.create<User>(user);
   }
 
@@ -22,12 +24,13 @@ export class UsersService {
   }
 
   async changePassword(id: number, newPassword: string) {
-    const [numberOfAffectedRows, [updatedUser]] =
-      await this.userRepository.update(
-        { password: newPassword },
-        { where: { id }, returning: true },
-      );
+    const result = await this.userRepository.update(
+      { password: newPassword },
+      { where: { id } },
+    );
 
+    const numberOfAffectedRows = result[0];
+    const updatedUser = result;
     return { numRec: numberOfAffectedRows, User: updatedUser };
   }
 }

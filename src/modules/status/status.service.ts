@@ -1,7 +1,7 @@
 import { Status } from '@Entities/status.entity';
 import { User } from '@Entities/user.entity';
 import { Injectable, Inject } from '@nestjs/common';
-import { StatusDto } from '../DTOs/status.dto';
+import { StatusDto } from '@Dtos/status.dto';
 import { STATUS_REPOSITORY } from 'src/core/constants';
 
 @Injectable()

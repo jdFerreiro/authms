@@ -11,7 +11,7 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { RoleService } from './roles.service';
 import { AuthGuard } from '@nestjs/passport';
-import { RoleDto } from '../DTOs/role.dto';
+import { RoleDto } from '@Dtos/role.dto';
 
 @ApiBearerAuth()
 @ApiTags('role')

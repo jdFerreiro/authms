@@ -1,4 +1,4 @@
-import { Menu } from '../entities/menu.entity';
+import { Menu } from '@Entities/menu.entity';
 import { MENU_REPOSITORY } from 'src/core/constants';
 
 export const menuProviders = [

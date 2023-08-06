@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { MenuRole } from '../entities/MenuRole.entity';
-import { MenuRoleDto } from '../DTOs/MenuRole.dto';
+import { MenuRole } from '@Entities/MenuRole.entity';
+import { MenuRoleDto } from '@Dtos/MenuRole.dto';
 import { MENUROLE_REPOSITORY } from 'src/core/constants';
 import { Role } from '@Entities/role.entity';
 import { Menu } from '@Entities/menu.entity';

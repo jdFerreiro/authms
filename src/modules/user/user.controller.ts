@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from './user.service';
-import { UserDto } from 'src/modules/DTOs/user.dto';
+import { UserDto } from '@Dtos/user.dto';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 
 @ApiBearerAuth()

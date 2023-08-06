@@ -19,7 +19,8 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@Entities/*": ["src/modules/entities/*"],
+      "@Dtos/*": ["src/core/database/DTOs/*"],
+      "@Entities/*": ["src/core/database/entities/*"],
     }
   },
 }

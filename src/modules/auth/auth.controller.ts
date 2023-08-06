@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from '@nestjs/passport';
-import { UserDto } from '../DTOs/user.dto';
+import { UserDto } from '@Dtos/user.dto';
 import { DoesUserExists } from 'src/core/doesUserExist.guard';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
 import { ApiKeyAuthGuard } from 'src/guards/apikey-auth.guard';
@@ -36,14 +36,14 @@ export class AuthController {
     return await this.authService.create(user);
   }
 
-  @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('local'))
   @Patch('changePassword')
   @HttpCode(200)
   async changePassword(@Request() req: any) {
     return await this.authService.changePassword(
-      req.id,
-      req.password,
-      req.newPassword,
+      req.query.id,
+      req.query.password,
+      req.query.newPassword,
     );
   }
 }

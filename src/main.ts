@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidateInputPipe } from './core/validate.pipe';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as RequestIP from 'request-ip';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -27,6 +28,8 @@ async function bootstrap() {
 
   app.setGlobalPrefix('api/v1');
   app.useGlobalPipes(new ValidateInputPipe());
+
+  app.use(RequestIP.mw());
   await app.listen(3100);
 }
 bootstrap();

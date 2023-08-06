@@ -11,7 +11,7 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { MenuService } from './menu.service';
 import { AuthGuard } from '@nestjs/passport';
-import { MenuDto } from '../DTOs/menu.dto';
+import { MenuDto } from '@Dtos/menu.dto';
 
 @ApiBearerAuth()
 @ApiTags('menu')

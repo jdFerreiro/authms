@@ -11,7 +11,7 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { StatusService } from './status.service';
 import { AuthGuard } from '@nestjs/passport';
-import { StatusDto } from '../DTOs/status.dto';
+import { StatusDto } from '@Dtos/status.dto';
 
 @ApiBearerAuth()
 @ApiTags('status')

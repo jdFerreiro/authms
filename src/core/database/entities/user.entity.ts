@@ -12,6 +12,7 @@ import {
   AfterDestroy,
   BeforeUpdate,
   HookOptions,
+  AfterFind,
 } from 'sequelize-typescript';
 import { Status } from './status.entity';
 import { Role } from './role.entity';
@@ -108,12 +109,27 @@ export class User extends Model<User> {
   @BelongsToMany(() => Role, () => UserRole)
   roles: Role[];
 
-  @BeforeUpdate
-  static hashPasswordBeforeUpdate(user: User, options: HookOptions) {}
+  @AfterFind
+  static selected(req) {
+    const ip = req.ClientIp;
+    console.log(ip);
+  }
 
   @AfterUpdate
-  static hookFunction(res) {
-    
-    console.log(res);
+  static updated(req) {
+    const ip = req.ClientIp;
+    console.log(ip);
+  }
+
+  @AfterCreate
+  static created(req) {
+    const ip = req.ClientIp;
+    console.log(ip);
+  }
+
+  @AfterDestroy
+  static destroyed(req) {
+    const ip = req.ClientIp;
+    console.log(ip);
   }
 }

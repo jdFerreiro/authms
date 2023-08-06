@@ -38,7 +38,7 @@ export class UserDto {
   @ApiProperty()
   @IsNotEmpty({ message: 'password is required.' })
   @MinLength(8, { message: 'password must be 8 characters long at lease.' })
-  readonly password: string;
+  password: string;
 
   @ApiProperty()
   @IsNotEmpty({ message: 'gender is required.' })

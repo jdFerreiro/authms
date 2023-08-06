@@ -1,4 +1,4 @@
-import { Status } from '../entities/status.entity';
+import { Status } from '@Entities/status.entity';
 import { STATUS_REPOSITORY } from 'src/core/constants';
 
 export const statusesProviders = [
