@@ -111,24 +111,28 @@ export class User extends Model<User> {
 
   @AfterFind
   static selected(req) {
+    console.log('select');
     const ip = req.ClientIp;
-    console.log(ip);
+    console.log(req);
   }
 
   @AfterUpdate
   static updated(req) {
+    console.log('update');
     const ip = req.ClientIp;
     console.log(ip);
   }
 
   @AfterCreate
   static created(req) {
+    console.log('create');
     const ip = req.ClientIp;
     console.log(ip);
   }
 
   @AfterDestroy
   static destroyed(req) {
+    console.log('Destroy');
     const ip = req.ClientIp;
     console.log(ip);
   }
