@@ -33,14 +33,14 @@ export class StatusController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('add')
-  async add(@Request() req, @Body() status: StatusDto) {
-    return await this.statusService.create(status, req.user.id);
+  async add(@Request() req, @Body() data: StatusDto) {
+    return await this.statusService.create(data, req.user.id);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Patch('update')
-  async update(@Request() req, @Body() status: StatusDto) {
-    return await this.statusService.update(req.query.id, status, req.user.id);
+  async update(@Request() req, @Body() data: StatusDto) {
+    return await this.statusService.update(req.query.id, data, req.user.id);
   }
 
   @UseGuards(AuthGuard('jwt'))

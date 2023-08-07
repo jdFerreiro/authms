@@ -11,6 +11,7 @@ import { StatusModule } from './modules/status/status.module';
 import { MenuModule } from './modules/menu/menu.module';
 import { UserRolesModule } from './modules/userroles/userroles.module';
 import { MenuRolesModule } from './modules/menuroles/menuroles.module';
+import { AuditModule } from './modules/audit/audit.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { MenuRolesModule } from './modules/menuroles/menuroles.module';
     MenuModule,
     UserRolesModule,
     MenuRolesModule,
+    AuditModule,
   ],
   controllers: [AppController],
   providers: [AppService],

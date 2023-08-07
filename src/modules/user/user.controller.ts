@@ -38,8 +38,8 @@ export class UserController {
 
   @UseGuards(AuthGuard('jwt'))
   @Patch('update')
-  async update(@Request() req, @Body() user: UserDto) {
-    return await this.userService.update(req.query.id, user, req.user.id);
+  async update(@Request() req, @Body() data: UserDto) {
+    return await this.userService.update(req.query.id, data, req.user.id);
   }
 
   @UseGuards(AuthGuard('jwt'))

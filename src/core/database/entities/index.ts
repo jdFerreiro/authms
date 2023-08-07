@@ -4,5 +4,6 @@ import { MenuRole } from './menurole.entity';
 import { Role } from './role.entity';
 import { Status } from './status.entity';
 import { UserRole } from './userRole.entity';
+import { Audit } from './Audit.entity';
 
-export { Menu, User, MenuRole, Role, Status, UserRole };
+export { Menu, User, MenuRole, Role, Status, UserRole, Audit };

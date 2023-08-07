@@ -1,7 +1,7 @@
+import { User } from '@Entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
-import { IsEnum, IsNotEmpty, MinLength, IsDate, IsIP } from 'class-validator';
-import { IsIPv4 } from 'sequelize-typescript';
+import { IsEnum, IsNotEmpty, MinLength, IsIP } from 'class-validator';
+import { ForeignKey, HasMany } from 'sequelize-typescript';
 
 enum eAction {
   SELECT = 'select',
@@ -26,20 +26,14 @@ export class AuditDto {
 
   @ApiProperty()
   @IsNotEmpty({ message: 'description is required.' })
-  @MinLength(15, {
+  @MinLength(5, {
     message: 'description must be 15 characters long at lease.',
   })
   description: string;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'created date is required.' })
-  @Transform(({ value }) => new Date(value))
-  @IsDate({ message: 'created date is not a valid date.' })
-  readonly createdDate: Date;
-
-  @ApiProperty()
   @IsNotEmpty({ message: 'ip address is required.' })
-  @IsIP('4', { message: 'ip address must be ip v4.' })
+  @IsIP('4', { message: 'invalid ip address.' })
   readonly ipAddress: string;
 
   @ApiProperty()
@@ -47,7 +41,12 @@ export class AuditDto {
   readonly payload: string;
 
   readonly createdAt: Date;
+  @ForeignKey(() => User)
   createdBy: number;
+
   readonly updatedAt: Date;
   updatedBy: number;
+
+  @HasMany(() => User)
+  users: User[];
 }

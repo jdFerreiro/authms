@@ -33,14 +33,14 @@ export class RolesController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('add')
-  async add(@Request() req, @Body() role: RoleDto) {
-    return await this.roleService.create(role, req.user.id);
+  async add(@Request() req, @Body() data: RoleDto) {
+    return await this.roleService.create(data, req.user.id);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Patch('update')
-  async update(@Request() req, @Body() role: RoleDto) {
-    return await this.roleService.update(req.query.id, role, req.user.id);
+  async update(@Request() req, @Body() data: RoleDto) {
+    return await this.roleService.update(req.query.id, data, req.user.id);
   }
 
   @UseGuards(AuthGuard('jwt'))

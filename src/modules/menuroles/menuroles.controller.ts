@@ -3,7 +3,6 @@ import {
   Get,
   UseGuards,
   Request,
-  Patch,
   Body,
   Delete,
   Post,
@@ -33,8 +32,8 @@ export class MenuRolesController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('add')
-  async add(@Request() req, @Body() role: MenuRoleDto) {
-    return await this.MenuroleService.create(role, req.user.id);
+  async add(@Request() req, @Body() data: MenuRoleDto) {
+    return await this.MenuroleService.create(data, req.user.id);
   }
 
   @UseGuards(AuthGuard('jwt'))

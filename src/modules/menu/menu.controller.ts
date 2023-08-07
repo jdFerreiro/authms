@@ -33,14 +33,14 @@ export class MenuController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('add')
-  async add(@Request() req, @Body() role: MenuDto) {
-    return await this.menuService.create(role, req.user.id);
+  async add(@Request() req, @Body() data: MenuDto) {
+    return await this.menuService.create(data, req.user.id);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Patch('update')
-  async update(@Request() req, @Body() role: MenuDto) {
-    return await this.menuService.update(role, req.user.id);
+  async update(@Request() req, @Body() data: MenuDto) {
+    return await this.menuService.update(data, req.user.id);
   }
 
   @UseGuards(AuthGuard('jwt'))

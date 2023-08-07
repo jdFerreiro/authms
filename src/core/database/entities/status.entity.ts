@@ -15,6 +15,7 @@ export class Status extends Model<Status> {
   @Column({
     type: DataType.INTEGER,
     allowNull: true,
+    autoIncrement: true,
     primaryKey: true,
   })
   id: number;

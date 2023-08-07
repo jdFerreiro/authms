@@ -2,7 +2,6 @@ import { Sequelize } from 'sequelize-typescript';
 import { SEQUELIZE, DEVELOPMENT, TEST, PRODUCTION } from '../constants';
 import { databaseConfig } from './database.config';
 import * as Models from '../database/entities';
-import { Model } from 'sequelize';
 
 export const databaseProviders = [
   {
@@ -31,6 +30,7 @@ export const databaseProviders = [
         Models.Status,
         Models.User,
         Models.UserRole,
+        Models.Audit,
       ]);
       await sequelize.sync();
       return sequelize;

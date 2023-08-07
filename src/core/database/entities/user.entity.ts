@@ -7,25 +7,23 @@ import {
   ForeignKey,
   BelongsToMany,
   Sequelize,
-  AfterCreate,
-  AfterUpdate,
-  AfterDestroy,
-  BeforeUpdate,
-  HookOptions,
-  AfterFind,
+  HasMany,
 } from 'sequelize-typescript';
 import { Status } from './status.entity';
 import { Role } from './role.entity';
 import { UserRole } from './userRole.entity';
+import { Audit } from './Audit.entity';
 
 @Table({
   tableName: 'users',
 })
 export class User extends Model<User> {
   @ForeignKey(() => UserRole)
+  @ForeignKey(() => Audit)
   @Column({
     type: DataType.INTEGER,
     allowNull: true,
+    autoIncrement: true,
     primaryKey: true,
   })
   id: number;
@@ -109,31 +107,6 @@ export class User extends Model<User> {
   @BelongsToMany(() => Role, () => UserRole)
   roles: Role[];
 
-  @AfterFind
-  static selected(req) {
-    console.log('select');
-    const ip = req.ClientIp;
-    console.log(req);
-  }
-
-  @AfterUpdate
-  static updated(req) {
-    console.log('update');
-    const ip = req.ClientIp;
-    console.log(ip);
-  }
-
-  @AfterCreate
-  static created(req) {
-    console.log('create');
-    const ip = req.ClientIp;
-    console.log(ip);
-  }
-
-  @AfterDestroy
-  static destroyed(req) {
-    console.log('Destroy');
-    const ip = req.ClientIp;
-    console.log(ip);
-  }
+  @HasMany(() => Audit)
+  audits: Audit[];
 }

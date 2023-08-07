@@ -3,7 +3,6 @@ import {
   Get,
   UseGuards,
   Request,
-  Patch,
   Body,
   Delete,
   Post,
@@ -33,8 +32,8 @@ export class UserRolesController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('add')
-  async add(@Request() req, @Body() role: UserRoleDto) {
-    return await this.userroleService.create(role, req.user.id);
+  async add(@Request() req, @Body() data: UserRoleDto) {
+    return await this.userroleService.create(data, req.user.id);
   }
 
   @UseGuards(AuthGuard('jwt'))

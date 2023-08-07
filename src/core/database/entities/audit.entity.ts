@@ -16,16 +16,10 @@ export class Audit extends Model<Audit> {
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    autoIncrement: true,
     primaryKey: true,
   })
   id: number;
-
-  @ForeignKey(() => User)
-  @Column({
-    type: DataType.INTEGER,
-    allowNull: true,
-  })
-  userId: number;
 
   @Column({
     type: DataType.ENUM,
@@ -39,13 +33,6 @@ export class Audit extends Model<Audit> {
     allowNull: false,
   })
   description: string;
-
-  @Column({
-    type: DataType.DATE,
-    allowNull: false,
-    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-  })
-  createDate: Date;
 
   @Column({
     type: DataType.STRING(45),
@@ -66,6 +53,7 @@ export class Audit extends Model<Audit> {
   })
   createdAt: Date;
 
+  @ForeignKey(() => User)
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
@@ -86,5 +74,5 @@ export class Audit extends Model<Audit> {
   updatedBy: number;
 
   @BelongsTo(() => User)
-  user: User[];
+  users: User[];
 }
