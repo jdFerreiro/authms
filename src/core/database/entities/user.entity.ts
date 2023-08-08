@@ -59,21 +59,16 @@ export class User extends Model<User> {
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
+    defaultValue: 1,
   })
   statusId: number;
 
   @Column({
     type: DataType.DATE,
-    allowNull: true,
+    allowNull: false,
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
   })
   statusDate: Date;
-
-  @Column({
-    type: DataType.ENUM,
-    allowNull: false,
-    values: ['male', 'female'],
-  })
-  gender: string;
 
   @Column({
     type: DataType.DATE,

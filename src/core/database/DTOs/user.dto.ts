@@ -41,13 +41,6 @@ export class UserDto {
   password: string;
 
   @ApiProperty()
-  @IsNotEmpty({ message: 'gender is required.' })
-  @IsEnum(Gender, {
-    message: 'gender must be either male or female',
-  })
-  readonly gender: string;
-
-  @ApiProperty()
   @IsNotEmpty({ message: 'status id is required.' })
   readonly statusId: number; // 1: active, 2: connected, 3: locked, 4: deleted
 

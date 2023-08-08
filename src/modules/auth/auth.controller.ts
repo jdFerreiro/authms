@@ -12,7 +12,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { UserDto } from '@Dtos/user.dto';
 import { DoesUserExists } from 'src/core/doesUserExist.guard';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
-import { ApiKeyAuthGuard } from 'src/guards/apikey-auth.guard';
+// import { ApiKeyAuthGuard } from 'src/guards/apikey-auth.guard';
 
 @ApiTags('auth')
 // @UseGuards(ApiKeyAuthGuard)
